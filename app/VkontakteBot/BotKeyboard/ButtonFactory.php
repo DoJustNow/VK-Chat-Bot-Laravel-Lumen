@@ -1,14 +1,14 @@
 <?php
 namespace App\VkontakteBot\BotKeyboard;
+
 //TODO сделать это реальной фабрикой
 class ButtonFactory
 {
 
-    public static function create(string $payload, string $label, string $colorType): array
+    public static function create(array $payload, string $label, string $colorType): array
     {
-        //TODO проверку длины payload и тип т.е что там json
     $button['action']['type'] = 'text';
-    $button['action']['payload'] = '{"button":"'.$payload.'"}';
+    $button['action']['payload'] = json_encode($payload,JSON_UNESCAPED_UNICODE);
     $button['action']['label'] = $label;
     $button['color']= $colorType;
     return $button;

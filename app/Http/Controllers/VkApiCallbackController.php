@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class VkApiCallbackController extends Controller
 {
+
     public function execute(Request $request)
     {
         //Если секрет не совпадает финиш
@@ -17,7 +18,7 @@ class VkApiCallbackController extends Controller
         if ($request->type === 'confirmation') {
             return env('VK_SECRET_INIT_KEY');
         }
-        //Отправка 'ok'
+        //Отправка 'ok' на любой запрос от VK
         $this->sendOK();
 
         if ($request->type === 'message_new') {
@@ -25,7 +26,7 @@ class VkApiCallbackController extends Controller
         }
     }
 
-    public function sendOK()
+    private function sendOK()
     {
         echo 'ok';
         $response_length = ob_get_length();
