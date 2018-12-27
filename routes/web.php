@@ -10,5 +10,5 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
-
-$router->any('api/vk/callback', ['uses'=>'VkApiCallbackController@execute']);
+$router->get('api/vk/callback', ['uses'=>'VkApiCallbackController@execute']);
+$router->post('api/vk/callback', ['uses'=>'VkApiCallbackController@execute']);
