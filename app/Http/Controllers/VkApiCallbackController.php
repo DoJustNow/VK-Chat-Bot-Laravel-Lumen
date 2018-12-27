@@ -18,7 +18,7 @@ class VkApiCallbackController extends Controller
             return env('VK_SECRET_INIT_KEY');
         }
         //Отправка 'ok'
-        //$this->sendOK();
+        $this->sendOK();
 
         if ($request->type === 'message_new') {
             MessageNewHandler::handle($request);
