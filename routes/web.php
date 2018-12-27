@@ -11,4 +11,4 @@
 |
 */
 
-$router->post('api/vk/callback', ['uses'=>'VkApiCallbackController@execute']);
+$router->any('api/vk/callback', ['uses'=>'VkApiCallbackController@execute']);
