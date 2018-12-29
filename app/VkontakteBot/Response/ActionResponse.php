@@ -21,10 +21,10 @@ class ActionResponse
         VKApiClient $vkApiClient,
         String $accessToken
     ) {
-        $this->botStandartMessages    = config('bot_messages');
-        $this->request     = $request;
-        $this->vkApiClient = $vkApiClient;
-        $this->accessToken = $accessToken;
+        $this->botStandartMessages = config('bot_messages');
+        $this->request             = $request;
+        $this->vkApiClient         = $vkApiClient;
+        $this->accessToken         = $accessToken;
     }
 
     public function start()
@@ -62,7 +62,7 @@ class ActionResponse
             'user_id'   => $this->request->object['from_id'],
             'random_id' => rand(0, 2 ** 31),
             //TODO подгружать из источника
-            'message'   => $this->botStandartMessages['faq_message'],
+            'message'   => $this->botStandartMessages['start_message'],
             'keyboard'  => json_encode($kb, JSON_UNESCAPED_UNICODE),
         ];
 
@@ -104,7 +104,7 @@ class ActionResponse
             'user_id'   => $userId,//498921857
             'random_id' => rand(0, 2 ** 31),
             //TODO подгружать из источника
-            'message'   => "🤖 🤖 🤖\n FAQ",
+            'message'   => $this->botStandartMessages['faq_message'],
             'keyboard'  => json_encode($kb, JSON_UNESCAPED_UNICODE),
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
@@ -116,7 +116,7 @@ class ActionResponse
             'user_id'    => $this->request->object['from_id'],//498921857
             'random_id'  => rand(0, 2 ** 31),
             //TODO подгружать из источника
-            'message'    => 'Преобрести товар вы можете там-то. И так-то.',
+            'message'    => $this->botStandartMessages['faq_buy_message'],
             'attachment' => 'photo-175591301_456239018',
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
@@ -128,7 +128,7 @@ class ActionResponse
             'user_id'    => $this->request->object['from_id'],//498921857
             'random_id'  => rand(0, 2 ** 31),
             //TODO подгружать из источника
-            'message'    => 'Оплата производится при таких-то условиях и такими-то способами',
+            'message'    => $this->botStandartMessages['faq_payment_message'],
             'attachment' => 'photo-175591301_456239019',
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
@@ -140,7 +140,7 @@ class ActionResponse
             'user_id'    => $this->request->object['from_id'],//498921857
             'random_id'  => rand(0, 2 ** 31),
             //TODO подгружать из источника
-            'message'    => 'Доставка осуществляется на велосипеде',
+            'message'    => $this->botStandartMessages['faq_delivery_message'],
             'attachment' => 'photo-175591301_456239020',
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
@@ -152,7 +152,7 @@ class ActionResponse
             'user_id'    => $this->request->object['from_id'],//498921857
             'random_id'  => rand(0, 2 ** 31),
             //TODO подгружать из источника
-            'message'    => 'Вовзрат по закону',
+            'message'    => $this->botStandartMessages['faq_money_back_message'],
             'attachment' => 'photo-175591301_456239021',
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
@@ -185,7 +185,7 @@ class ActionResponse
             'user_id'   => $userId,//498921857
             'random_id' => rand(0, 2 ** 31),
             //TODO подгружать из источника
-            'message'   => "🤖 🤖 🤖\nСасибо за проявленный интерес. Продолжай!",
+            'message'   => $this->botStandartMessages['about_message'],
             'keyboard'  => json_encode($kb, JSON_UNESCAPED_UNICODE),
         ];
 
@@ -199,7 +199,7 @@ class ActionResponse
             'user_id'   => $this->request->object['from_id'],//498921857
             'random_id' => rand(0, 2 ** 31),
             //TODO подгружать из источника
-            'message'   => 'Магазин рассположен в центре мира.',
+            'message'   => $this->botStandartMessages['about_shop_message'],
             'lat'       => 60,
             'long'      => 90,
         ];
@@ -212,7 +212,7 @@ class ActionResponse
             'user_id'    => $this->request->object['from_id'],//498921857
             'random_id'  => rand(0, 2 ** 31),
             //TODO подгружать из источника
-            'message'    => 'Коллектив успешных, молодых профессионалов своего дела.',
+            'message'    => $this->botStandartMessages['about_workers_message'],
             'attachment' => 'photo-175591301_456239022',
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
@@ -226,7 +226,7 @@ class ActionResponse
             'user_id'   => $userId,//498921857
             'random_id' => rand(0, 2 ** 31),
             //TODO подгружать из источника
-            'message'   => "Отзывы можно посмотреть в группе по ссылке: https://vk.com/dialogue_bot",
+            'message'   => $this->botStandartMessages['reviews_message'],
         ];
 
         $this->vkApiClient->messages()->send($this->accessToken, $params);
@@ -269,11 +269,7 @@ class ActionResponse
             'user_id'   => $userId,//498921857
             'random_id' => rand(0, 2 ** 31),
             //TODO подгружать из источника
-            'message'   => "🤖 🤖 🤖\n Акции:\n
-            1 - ...\n
-            2 - ...\n
-            3 - ...\n
-            4 - ...",
+            'message'   => $this->botStandartMessages['stock_message'],
             'keyboard'  => json_encode($kb, JSON_UNESCAPED_UNICODE),
         ];
 
@@ -286,7 +282,7 @@ class ActionResponse
             'user_id'   => $this->request->object['from_id'],//498921857
             'random_id' => rand(0, 2 ** 31),
             //TODO подгружать из источника
-            'message'   => 'Акция 1...',
+            'message'   => $this->botStandartMessages['stock_1_message'],
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
     }
@@ -297,7 +293,7 @@ class ActionResponse
             'user_id'   => $this->request->object['from_id'],//498921857
             'random_id' => rand(0, 2 ** 31),
             //TODO подгружать из источника
-            'message'   => 'Акция 2...',
+            'message'   => $this->botStandartMessages['stock_2_message'],
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
     }
@@ -308,7 +304,7 @@ class ActionResponse
             'user_id'   => $this->request->object['from_id'],//498921857
             'random_id' => rand(0, 2 ** 31),
             //TODO подгружать из источника
-            'message'   => 'Акция 3...',
+            'message'   => $this->botStandartMessages['stock_3_message'],
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
     }
@@ -321,7 +317,7 @@ class ActionResponse
             'user_id'   => $userId,//498921857
             'random_id' => rand(0, 2 ** 31),
             //TODO подгружать из источника
-            'message'   => 'Введите ваш бонус код (для теста bonus10,bonus30):',
+            'message'   => $this->botStandartMessages['stock_4_message'],
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
     }
@@ -339,7 +335,7 @@ class ActionResponse
             $message = $bonusCodes[$userBonusCode];
         } else {
             $message
-                = "Такого бонус-кода нет. Возможно вы ошиблись при вводе.\nПопробуйте ввести код заново:";
+                = $this->botStandartMessages['stock_4_check_bonus_fail_message'];
         }
 
         $params = [
@@ -356,6 +352,7 @@ class ActionResponse
         $params = [
             'user_id'    => $this->request->object['from_id'],//498921857
             'random_id'  => rand(0, 2 ** 31),
+            'message'    => $this->botStandartMessages['default_message'],
             //TODO подгружать из источника
             'attachment' => "photo-175591301_456239017",
         ];
