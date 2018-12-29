@@ -11,20 +11,23 @@ abstract class MessageNewHandler implements RequestTypeHandlerInterface
 
     public static function handle(Request $request)
     {
-        //Определяем на каком этапе диалог с юзверем
-        $userId     = $request->object['from_id'];
+        $userId = $request->object['from_id'];
+
         $dialogStep = Cache::remember("dialog_step_$userId", 5,
             function () use ($userId) {
                 return 'start';
             });
+
         if (isset($request->object['payload'])) {
-            $dialogStep = json_decode($request->object['payload'])->button;
+            $payload = json_decode($request->object['payload'], true);
+            if (isset($payload['button'])) {
+                $dialogStep = $payload['button'];
+            }
         }
-        //Класс выполняющий ответ на запрос
+
         $actionResponse = new ActionResponse($request, new VKApiClient('5.92'),
             env('VK_SECRET_KEY_GROUP'));
 
-        //Переходим к тому действию что соответствует шагу
         switch ($dialogStep) {
             case 'start':
                 $actionResponse->start();
@@ -32,7 +35,6 @@ abstract class MessageNewHandler implements RequestTypeHandlerInterface
             case 'faq':
                 $actionResponse->faqClick();
                 break;
-            //Уровень
             case 'faq_buy':
                 $actionResponse->faqBuyClick();
                 break;
@@ -60,7 +62,6 @@ abstract class MessageNewHandler implements RequestTypeHandlerInterface
             case 'reviews':
                 $actionResponse->reviewsClick();
                 break;
-            //Уровень 2
             case 'stock_1':
                 $actionResponse->stock1Click();
                 break;
@@ -79,6 +80,5 @@ abstract class MessageNewHandler implements RequestTypeHandlerInterface
             default:
                 $actionResponse->defaultResponse();
         }
-
     }
 }

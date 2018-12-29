@@ -20,7 +20,7 @@ class VkApiCallbackController extends Controller
         }
         //Отправка 'ok' на любой запрос от VK
         $this->sendOK();
-
+        //Обрабатываем поступившее сообщение
         if ($request->type === 'message_new') {
             MessageNewHandler::handle($request);
         }
@@ -42,7 +42,6 @@ class VkApiCallbackController extends Controller
         header('Content-Encoding: none');
         header('Content-Length: ' . $response_length);
         header('Connection: close');
-
         ob_end_flush();
         ob_flush();
         flush();
