@@ -21,10 +21,11 @@ class ActionResponse
         VKApiClient $vkApiClient,
         String $accessToken
     ) {
-        $this->botStandartMessages = config('bot_messages');
-        $this->request             = $request;
-        $this->vkApiClient         = $vkApiClient;
-        $this->accessToken         = $accessToken;
+        $this->botStandartMessages    = config('bot_messages');
+        $this->botStandartAttachments = config('bot_vk_media_attachments');
+        $this->request                = $request;
+        $this->vkApiClient            = $vkApiClient;
+        $this->accessToken            = $accessToken;
     }
 
     public function start()
@@ -117,7 +118,7 @@ class ActionResponse
             'random_id'  => rand(0, 2 ** 31),
             //TODO подгружать из источника
             'message'    => $this->botStandartMessages['faq_buy_message'],
-            'attachment' => 'photo-175591301_456239018',
+            'attachment' => $this->botStandartAttachments['faq_buy_attachment'],
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
     }
@@ -129,7 +130,7 @@ class ActionResponse
             'random_id'  => rand(0, 2 ** 31),
             //TODO подгружать из источника
             'message'    => $this->botStandartMessages['faq_payment_message'],
-            'attachment' => 'photo-175591301_456239019',
+            'attachment' => $this->botStandartAttachments['faq_payment_attachment'],
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
     }
@@ -141,7 +142,7 @@ class ActionResponse
             'random_id'  => rand(0, 2 ** 31),
             //TODO подгружать из источника
             'message'    => $this->botStandartMessages['faq_delivery_message'],
-            'attachment' => 'photo-175591301_456239020',
+            'attachment' => $this->botStandartAttachments['faq_delivery_attachment'],
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
     }
@@ -153,7 +154,7 @@ class ActionResponse
             'random_id'  => rand(0, 2 ** 31),
             //TODO подгружать из источника
             'message'    => $this->botStandartMessages['faq_money_back_message'],
-            'attachment' => 'photo-175591301_456239021',
+            'attachment' => $this->botStandartAttachments['faq_money_back_attachment'],
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
     }
@@ -200,8 +201,8 @@ class ActionResponse
             'random_id' => rand(0, 2 ** 31),
             //TODO подгружать из источника
             'message'   => $this->botStandartMessages['about_shop_message'],
-            'lat'       => 60,
-            'long'      => 90,
+            'lat'       => config('bot_map_coordinates.main_shop.lat'),
+            'long'      => config('bot_map_coordinates.main_shop.long'),
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
     }
@@ -213,7 +214,7 @@ class ActionResponse
             'random_id'  => rand(0, 2 ** 31),
             //TODO подгружать из источника
             'message'    => $this->botStandartMessages['about_workers_message'],
-            'attachment' => 'photo-175591301_456239022',
+            'attachment' => $this->botStandartAttachments['about_workers_attachment'],
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
     }
@@ -350,11 +351,9 @@ class ActionResponse
     public function defaultResponse()
     {
         $params = [
-            'user_id'    => $this->request->object['from_id'],//498921857
-            'random_id'  => rand(0, 2 ** 31),
-            'message'    => $this->botStandartMessages['default_message'],
-            //TODO подгружать из источника
-            'attachment' => "photo-175591301_456239017",
+            'user_id'   => $this->request->object['from_id'],//498921857
+            'random_id' => rand(0, 2 ** 31),
+            'message'   => $this->botStandartMessages['default_message'],
         ];
         $this->vkApiClient->messages()->send($this->accessToken, $params);
     }
