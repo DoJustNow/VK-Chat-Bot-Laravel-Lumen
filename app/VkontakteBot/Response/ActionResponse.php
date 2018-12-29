@@ -14,12 +14,14 @@ class ActionResponse
     private $vkApiClient;
     private $request;
     private $accessToken;
+    private $botStandartMessages;
 
     public function __construct(
         Request $request,
         VKApiClient $vkApiClient,
         String $accessToken
     ) {
+        $this->botStandartMessages    = config('bot_messages');
         $this->request     = $request;
         $this->vkApiClient = $vkApiClient;
         $this->accessToken = $accessToken;
@@ -27,10 +29,14 @@ class ActionResponse
 
     public function start()
     {
-        $buttonFaq       = ButtonFactory::create(['button'=>'faq'], 'FAQ', 'primary');
-        $buttonAbout     = ButtonFactory::create(['button'=>'about'], "О нас", 'primary');
-        $buttonMoneyBack = ButtonFactory::create(['button'=>'reviews'], "Отзывы", 'primary');
-        $buttonStock     = ButtonFactory::create(['button'=>'stock'], "Акции", 'positive');
+        $buttonFaq       = ButtonFactory::create(['button' => 'faq'], 'FAQ',
+            'primary');
+        $buttonAbout     = ButtonFactory::create(['button' => 'about'], "О нас",
+            'primary');
+        $buttonMoneyBack = ButtonFactory::create(['button' => 'reviews'],
+            "Отзывы", 'primary');
+        $buttonStock     = ButtonFactory::create(['button' => 'stock'], "Акции",
+            'positive');
 
         $buttonRow1 = ButtonRowFactory::createRow()
                                       ->addButton($buttonFaq)
@@ -56,7 +62,7 @@ class ActionResponse
             'user_id'   => $this->request->object['from_id'],
             'random_id' => rand(0, 2 ** 31),
             //TODO подгружать из источника
-            'message'   => "🤖 🤖 🤖\n Выбирай",
+            'message'   => $this->botStandartMessages['faq_message'],
             'keyboard'  => json_encode($kb, JSON_UNESCAPED_UNICODE),
         ];
 
@@ -67,11 +73,16 @@ class ActionResponse
     {
         $userId = $this->request->object['from_id'];
         Cache::put("dialog_step_$userId", 'faq', 5);
-        $b1 = ButtonFactory::create(['button'=>'faq_buy'], 'Покупка', 'primary');
-        $b2 = ButtonFactory::create(['button'=>'faq_payment'], 'Оплата', 'primary');
-        $b3 = ButtonFactory::create(['button'=>'faq_delivery'], 'Доставка', 'primary');
-        $b4 = ButtonFactory::create(['button'=>'faq_money_back'], 'Возврат', 'primary');
-        $b5 = ButtonFactory::create(['button'=>'start'], '<< Назад', 'negative');
+        $b1 = ButtonFactory::create(['button' => 'faq_buy'], 'Покупка',
+            'primary');
+        $b2 = ButtonFactory::create(['button' => 'faq_payment'], 'Оплата',
+            'primary');
+        $b3 = ButtonFactory::create(['button' => 'faq_delivery'], 'Доставка',
+            'primary');
+        $b4 = ButtonFactory::create(['button' => 'faq_money_back'], 'Возврат',
+            'primary');
+        $b5 = ButtonFactory::create(['button' => 'start'], '<< Назад',
+            'negative');
 
         $btnRow1 = ButtonRowFactory::createRow()
                                    ->addButton($b1)
@@ -151,9 +162,12 @@ class ActionResponse
     {
         $userId = $this->request->object['from_id'];
         Cache::put("dialog_step_$userId", 'about', 5);
-        $b1 = ButtonFactory::create(['button'=>'about_shop'], 'О магазаине', 'primary');
-        $b2 = ButtonFactory::create(['button'=>'about_workers'], 'О работниках', 'primary');
-        $b3 = ButtonFactory::create(['button'=>'start'], '<< Назад', 'negative');
+        $b1 = ButtonFactory::create(['button' => 'about_shop'], 'О магазаине',
+            'primary');
+        $b2 = ButtonFactory::create(['button' => 'about_workers'],
+            'О работниках', 'primary');
+        $b3 = ButtonFactory::create(['button' => 'start'], '<< Назад',
+            'negative');
 
         $btnRow1 = ButtonRowFactory::createRow()->addButton($b1)
                                    ->addButton($b2)
@@ -222,11 +236,16 @@ class ActionResponse
     {
         $userId = $this->request->object['from_id'];
         Cache::put("dialog_step_$userId", 'stock', 5);
-        $b1 = ButtonFactory::create(['button'=>'stock_1'], 'Акция 1', 'primary');
-        $b2 = ButtonFactory::create(['button'=>'stock_2'], 'Акция 2', 'primary');
-        $b3 = ButtonFactory::create(['button'=>'stock_3'], 'Акция 3', 'primary');
-        $b4 = ButtonFactory::create(['button'=>'stock_4'], 'Бонус код', 'primary');
-        $b5 = ButtonFactory::create(['button'=>'start'], '<< Назад', 'negative');
+        $b1 = ButtonFactory::create(['button' => 'stock_1'], 'Акция 1',
+            'primary');
+        $b2 = ButtonFactory::create(['button' => 'stock_2'], 'Акция 2',
+            'primary');
+        $b3 = ButtonFactory::create(['button' => 'stock_3'], 'Акция 3',
+            'primary');
+        $b4 = ButtonFactory::create(['button' => 'stock_4'], 'Бонус код',
+            'primary');
+        $b5 = ButtonFactory::create(['button' => 'start'], '<< Назад',
+            'negative');
 
         $btnRow1 = ButtonRowFactory::createRow()->addButton($b1)
                                    ->addButton($b2)
