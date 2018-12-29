@@ -31,28 +31,28 @@ class ActionResponse
 
     public function start()
     {
-        $buttonFaq       = ButtonFactory::create(['button' => 'faq'], $this->botButtonLabels['faq'], 'primary');
-        $buttonAbout     = ButtonFactory::create(['button' => 'about'], $this->botButtonLabels['about'], 'primary');
-        $buttonMoneyBack = ButtonFactory::create(['button' => 'reviews'], $this->botButtonLabels['reviews'], 'primary');
-        $buttonStock     = ButtonFactory::create(['button' => 'stock'], $this->botButtonLabels['stock'], 'positive');
+        $btnFaq       = ButtonFactory::create(['button' => 'faq'], $this->botButtonLabels['faq'], 'primary');
+        $btnAbout     = ButtonFactory::create(['button' => 'about'], $this->botButtonLabels['about'], 'primary');
+        $btnMoneyBack = ButtonFactory::create(['button' => 'reviews'], $this->botButtonLabels['reviews'], 'primary');
+        $btnStock     = ButtonFactory::create(['button' => 'stock'], $this->botButtonLabels['stock'], 'positive');
 
-        $buttonRow1 = ButtonRowFactory::createRow()
-                                      ->addButton($buttonFaq)
-                                      ->addButton($buttonAbout)
+        $btnRow1 = ButtonRowFactory::createRow()
+                                      ->addButton($btnFaq)
+                                      ->addButton($btnAbout)
                                       ->getRow();
 
-        $buttonRow2 = ButtonRowFactory::createRow()
-                                      ->addButton($buttonMoneyBack)
+        $btnRow2 = ButtonRowFactory::createRow()
+                                      ->addButton($btnMoneyBack)
                                       ->getRow();
 
-        $buttonRow3 = ButtonRowFactory::createRow()
-                                      ->addButton($buttonStock)
+        $btnRow3 = ButtonRowFactory::createRow()
+                                      ->addButton($btnStock)
                                       ->getRow();
 
         $kb = KeyboardFactory::createKeyboard()
-                             ->addRow($buttonRow1)
-                             ->addRow($buttonRow2)
-                             ->addRow($buttonRow3)
+                             ->addRow($btnRow1)
+                             ->addRow($btnRow2)
+                             ->addRow($btnRow3)
                              ->setOneTime(false)
                              ->getKeyboard();
 
@@ -71,21 +71,21 @@ class ActionResponse
     {
         $userId = $this->request->object['from_id'];
         Cache::put("dialog_step_$userId", 'faq', 5);
-        $b1 = ButtonFactory::create(['button' => 'faq_buy'], $this->botButtonLabels['faq_buy'], 'primary');
-        $b2 = ButtonFactory::create(['button' => 'faq_payment'], $this->botButtonLabels['faq_payment'], 'primary');
-        $b3 = ButtonFactory::create(['button' => 'faq_delivery'], $this->botButtonLabels['faq_delivery'], 'primary');
-        $b4 = ButtonFactory::create(['button' => 'faq_money_back'], $this->botButtonLabels['faq_money_back'], 'primary');
-        $b5 = ButtonFactory::create(['button' => 'start'], $this->botButtonLabels['start'], 'negative');
+        $btnFaqBuy = ButtonFactory::create(['button' => 'faq_buy'], $this->botButtonLabels['faq_buy'], 'primary');
+        $btnFaqPayment = ButtonFactory::create(['button' => 'faq_payment'], $this->botButtonLabels['faq_payment'], 'primary');
+        $btnFaqDelivery = ButtonFactory::create(['button' => 'faq_delivery'], $this->botButtonLabels['faq_delivery'], 'primary');
+        $btnFaqMoneyBack = ButtonFactory::create(['button' => 'faq_money_back'], $this->botButtonLabels['faq_money_back'], 'primary');
+        $btnBackToStart = ButtonFactory::create(['button' => 'start'], $this->botButtonLabels['start'], 'negative');
 
         $btnRow1 = ButtonRowFactory::createRow()
-                                   ->addButton($b1)
-                                   ->addButton($b2)
-                                   ->addButton($b3)
-                                   ->addButton($b4)
+                                   ->addButton($btnFaqBuy)
+                                   ->addButton($btnFaqPayment)
+                                   ->addButton($btnFaqDelivery)
+                                   ->addButton($btnFaqMoneyBack)
                                    ->getRow();
 
         $btnRow2 = ButtonRowFactory::createRow()
-                                   ->addButton($b5)
+                                   ->addButton($btnBackToStart)
                                    ->getRow();
 
         $kb = KeyboardFactory::createKeyboard()->addRow($btnRow1)
@@ -155,18 +155,15 @@ class ActionResponse
     {
         $userId = $this->request->object['from_id'];
         Cache::put("dialog_step_$userId", 'about', 5);
-        $b1 = ButtonFactory::create(['button' => 'about_shop'], 'О магазаине',
-            'primary');
-        $b2 = ButtonFactory::create(['button' => 'about_workers'],
-            'О работниках', 'primary');
-        $b3 = ButtonFactory::create(['button' => 'start'], '<< Назад',
-            'negative');
+        $btnAboutShop = ButtonFactory::create(['button' => 'about_shop'], $this->botButtonLabels['about_shop'], 'primary');
+        $btnAboutWorkers = ButtonFactory::create(['button' => 'about_workers'], $this->botButtonLabels['about_workers'], 'primary');
+        $btnBackToStart = ButtonFactory::create(['button' => 'start'], $this->botButtonLabels['start'], 'negative');
 
-        $btnRow1 = ButtonRowFactory::createRow()->addButton($b1)
-                                   ->addButton($b2)
+        $btnRow1 = ButtonRowFactory::createRow()->addButton($btnAboutShop)
+                                   ->addButton($btnAboutWorkers)
                                    ->getRow();
 
-        $btnRow2 = ButtonRowFactory::createRow()->addButton($b3)
+        $btnRow2 = ButtonRowFactory::createRow()->addButton($btnBackToStart)
                                    ->getRow();
 
         $kb = KeyboardFactory::createKeyboard()->addRow($btnRow1)
