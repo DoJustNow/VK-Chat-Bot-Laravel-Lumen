@@ -25,6 +25,7 @@ $app = new Laravel\Lumen\Application(
 $app->configure('bot_messages');
 $app->configure('bot_vk_media_attachments');
 $app->configure('bot_map_coordinates');
+$app->configure('bot_button_names');
 $app->withFacades();
 
 // $app->withEloquent();

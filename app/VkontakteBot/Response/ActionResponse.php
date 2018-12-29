@@ -23,6 +23,7 @@ class ActionResponse
     ) {
         $this->botStandartMessages    = config('bot_messages');
         $this->botStandartAttachments = config('bot_vk_media_attachments');
+        $this->botButtonLabels        = config('bot_button_names');
         $this->request                = $request;
         $this->vkApiClient            = $vkApiClient;
         $this->accessToken            = $accessToken;
@@ -30,14 +31,10 @@ class ActionResponse
 
     public function start()
     {
-        $buttonFaq       = ButtonFactory::create(['button' => 'faq'], 'FAQ',
-            'primary');
-        $buttonAbout     = ButtonFactory::create(['button' => 'about'], "О нас",
-            'primary');
-        $buttonMoneyBack = ButtonFactory::create(['button' => 'reviews'],
-            "Отзывы", 'primary');
-        $buttonStock     = ButtonFactory::create(['button' => 'stock'], "Акции",
-            'positive');
+        $buttonFaq       = ButtonFactory::create(['button' => 'faq'], $this->botButtonLabels['faq'], 'primary');
+        $buttonAbout     = ButtonFactory::create(['button' => 'about'], $this->botButtonLabels['about'], 'primary');
+        $buttonMoneyBack = ButtonFactory::create(['button' => 'reviews'], $this->botButtonLabels['reviews'], 'primary');
+        $buttonStock     = ButtonFactory::create(['button' => 'stock'], $this->botButtonLabels['stock'], 'positive');
 
         $buttonRow1 = ButtonRowFactory::createRow()
                                       ->addButton($buttonFaq)
@@ -74,16 +71,11 @@ class ActionResponse
     {
         $userId = $this->request->object['from_id'];
         Cache::put("dialog_step_$userId", 'faq', 5);
-        $b1 = ButtonFactory::create(['button' => 'faq_buy'], 'Покупка',
-            'primary');
-        $b2 = ButtonFactory::create(['button' => 'faq_payment'], 'Оплата',
-            'primary');
-        $b3 = ButtonFactory::create(['button' => 'faq_delivery'], 'Доставка',
-            'primary');
-        $b4 = ButtonFactory::create(['button' => 'faq_money_back'], 'Возврат',
-            'primary');
-        $b5 = ButtonFactory::create(['button' => 'start'], '<< Назад',
-            'negative');
+        $b1 = ButtonFactory::create(['button' => 'faq_buy'], $this->botButtonLabels['faq_buy'], 'primary');
+        $b2 = ButtonFactory::create(['button' => 'faq_payment'], $this->botButtonLabels['faq_payment'], 'primary');
+        $b3 = ButtonFactory::create(['button' => 'faq_delivery'], $this->botButtonLabels['faq_delivery'], 'primary');
+        $b4 = ButtonFactory::create(['button' => 'faq_money_back'], $this->botButtonLabels['faq_money_back'], 'primary');
+        $b5 = ButtonFactory::create(['button' => 'start'], $this->botButtonLabels['start'], 'negative');
 
         $btnRow1 = ButtonRowFactory::createRow()
                                    ->addButton($b1)
@@ -237,16 +229,11 @@ class ActionResponse
     {
         $userId = $this->request->object['from_id'];
         Cache::put("dialog_step_$userId", 'stock', 5);
-        $b1 = ButtonFactory::create(['button' => 'stock_1'], 'Акция 1',
-            'primary');
-        $b2 = ButtonFactory::create(['button' => 'stock_2'], 'Акция 2',
-            'primary');
-        $b3 = ButtonFactory::create(['button' => 'stock_3'], 'Акция 3',
-            'primary');
-        $b4 = ButtonFactory::create(['button' => 'stock_4'], 'Бонус код',
-            'primary');
-        $b5 = ButtonFactory::create(['button' => 'start'], '<< Назад',
-            'negative');
+        $b1 = ButtonFactory::create(['button' => 'stock_1'], $this->botButtonLabels['stock_1'], 'primary');
+        $b2 = ButtonFactory::create(['button' => 'stock_2'], $this->botButtonLabels['stock_2'], 'primary');
+        $b3 = ButtonFactory::create(['button' => 'stock_3'], $this->botButtonLabels['stock_3'], 'primary');
+        $b4 = ButtonFactory::create(['button' => 'stock_4'], $this->botButtonLabels['stock_4'], 'primary');
+        $b5 = ButtonFactory::create(['button' => 'start'], $this->botButtonLabels['start'], 'negative');
 
         $btnRow1 = ButtonRowFactory::createRow()->addButton($b1)
                                    ->addButton($b2)
