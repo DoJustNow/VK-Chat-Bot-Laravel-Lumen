@@ -22,7 +22,7 @@ try {
 $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
-
+$app->configure('bot_messages');
  $app->withFacades();
 
 // $app->withEloquent();
