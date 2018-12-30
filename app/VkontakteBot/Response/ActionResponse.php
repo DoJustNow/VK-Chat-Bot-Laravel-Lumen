@@ -54,13 +54,13 @@ class ActionResponse
                              ->addRow($btnRow2)
                              ->addRow($btnRow3)
                              ->setOneTime(false)
-                             ->getKeyboard();
+                             ->getKeyboardJson()();
 
         $params = [
             'user_id'   => $this->request->object['from_id'],
             'random_id' => rand(0, 2 ** 31),
             'message'   => $this->botStandartMessages['start_message'],
-            'keyboard'  => json_encode($kb, JSON_UNESCAPED_UNICODE),
+            'keyboard'  => $kb,
         ];
 
         $this->vkApiClient->messages()->send($this->accessToken, $params);
@@ -93,13 +93,13 @@ class ActionResponse
                              ->addRow($btnRow1)
                              ->addRow($btnRow2)
                              ->setOneTime(true)
-                             ->getKeyboard();
+                             ->getKeyboardJson()();
 
         $params = [
             'user_id'   => $userId,
             'random_id' => rand(0, 2 ** 31),
             'message'   => $this->botStandartMessages['faq_message'],
-            'keyboard'  => json_encode($kb, JSON_UNESCAPED_UNICODE),
+            'keyboard'  => $kb,
         ];
 
         $this->vkApiClient->messages()->send($this->accessToken, $params);
@@ -177,13 +177,13 @@ class ActionResponse
                              ->addRow($btnRow1)
                              ->addRow($btnRow2)
                              ->setOneTime(true)
-                             ->getKeyboard();
+                             ->getKeyboardJson()();
 
         $params = [
             'user_id'   => $userId,
             'random_id' => rand(0, 2 ** 31),
             'message'   => $this->botStandartMessages['about_message'],
-            'keyboard'  => json_encode($kb, JSON_UNESCAPED_UNICODE),
+            'keyboard'  => $kb,
         ];
 
         $this->vkApiClient->messages()->send($this->accessToken, $params);
@@ -260,13 +260,13 @@ class ActionResponse
                              ->addRow($btnRow2)
                              ->addRow($btnRow3)
                              ->setOneTime(true)
-                             ->getKeyboard();
+                             ->getKeyboardJson()();
 
         $params = [
             'user_id'   => $userId,
             'random_id' => rand(0, 2 ** 31),
             'message'   => $this->botStandartMessages['stock_message'],
-            'keyboard'  => json_encode($kb, JSON_UNESCAPED_UNICODE),
+            'keyboard'  => $kb,
         ];
 
         $this->vkApiClient->messages()->send($this->accessToken, $params);
