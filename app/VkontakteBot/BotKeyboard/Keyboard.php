@@ -7,21 +7,21 @@ class Keyboard
     private $keyboard = [];
     private $oneTime = false;
 
-    public function addRow(array $buttonRow)
+    public function addRow(array $buttonRow): self
     {
         $this->keyboard['buttons'][] = $buttonRow;
 
         return $this;
     }
 
-    public function setOneTime(bool $value)
+    public function setOneTime(bool $value): self
     {
         $this->oneTime = $value;
 
         return $this;
     }
 
-    public function getKeyboard()
+    public function getKeyboard(): array
     {
         return $this->keyboard;
     }

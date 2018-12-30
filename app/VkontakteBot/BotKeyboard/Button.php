@@ -1,8 +1,7 @@
 <?php
 namespace App\VkontakteBot\BotKeyboard;
 
-//TODO сделать это реальной фабрикой
-class ButtonFactory
+class Button
 {
 
     public static function create(array $payload, string $label, string $colorType): array
