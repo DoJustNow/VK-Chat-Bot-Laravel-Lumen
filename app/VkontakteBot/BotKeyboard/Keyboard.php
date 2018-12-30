@@ -21,8 +21,8 @@ class Keyboard
         return $this;
     }
 
-    public function getKeyboard(): array
+    public function getKeyboardJson(): string
     {
-        return $this->keyboard;
+        return json_encode($this->keyboard, JSON_UNESCAPED_UNICODE);
     }
 }
